@@ -1,8 +1,8 @@
 import tkinter
 from tkinter import *
-from pygame import mixer
 from tkinter import filedialog, messagebox
 
+from pygame import mixer
 
 filename = ''
 is_playing = False
@@ -74,6 +74,14 @@ def set_volume(value):
     mixer.music.set_volume(volume)
 
 
+def prev_music():
+    pass
+
+
+def next_music():
+    pass
+
+
 text_label = Label(window, text="Play Button")
 text_label.pack()
 
@@ -83,18 +91,33 @@ pause_icon = PhotoImage(file="assets/icons/96/pause.png")
 next_icon = PhotoImage(file="assets/icons/96/forward.png")
 prev_icon = PhotoImage(file="assets/icons/96/rewind.png")
 
-play_btn = Button(window, image=play_icon, command=play_music)
-play_btn.pack()
+top_frame = Frame(window)
+top_frame.pack(padx=10, pady=10)
 
-pause_btn = Button(window, image=pause_icon, command=pause_music)
-pause_btn.pack()
+prev_btn = Button(top_frame, image=prev_icon, command=prev_music)
+prev_btn.grid(row=0, column=0, padx=10)
 
-stop_btn = Button(window, image=stop_icon, command=stop_music)
-stop_btn.pack()
+play_btn = Button(top_frame, image=play_icon, command=play_music)
+play_btn.grid(row=0, column=1, padx=10)
 
-scale = Scale(window, from_=0, to=100, orient=HORIZONTAL, command=set_volume)
+pause_btn = Button(top_frame, image=pause_icon, command=pause_music)
+pause_btn.grid(row=0, column=2, padx=10)
+
+stop_btn = Button(top_frame, image=stop_icon, command=stop_music)
+stop_btn.grid(row=0, column=3, padx=10)
+
+next_btn = Button(top_frame, image=next_icon, command=next_music)
+next_btn.grid(row=0, column=4, padx=10)
+
+scale = Scale(top_frame, from_=0, to=100, orient=HORIZONTAL, command=set_volume)
 scale.set(30)
-scale.pack()
+scale.grid(row=1, column=0, columnspan=5, pady=15, sticky=NSEW)
+
+bottom_frame = Frame(window)
+bottom_frame.pack(padx=10, pady=10)
+
+status_bar = Label(window, text="Keep Enjoying the Music", relief=SUNKEN, anchor=W)
+status_bar.pack(side=BOTTOM, fill=X)
 
 if __name__ == "__main__":
     window.mainloop()
