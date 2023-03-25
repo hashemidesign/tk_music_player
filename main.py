@@ -5,6 +5,7 @@ from tkinter import filedialog, messagebox
 
 
 filename = ''
+is_playing = False
 
 
 def browse_file():
@@ -38,20 +39,34 @@ help_submenu.add_command(label="About", command=show_help_window)
 
 
 def play_music():
+    global is_playing
     try:
         mixer.music.load(filename)
         mixer.music.play()
+        is_playing = True
     except:
         tkinter.messagebox.showerror("File Not Found")
         print("File Not Found Error")
 
 
 def stop_music():
+    global is_playing
     mixer.music.stop()
+    is_playing = False
 
 
 def pause_music():
-    mixer.music.pause()
+    global is_playing
+    try:
+        if is_playing:
+            mixer.music.pause()
+            is_playing = False
+        else:
+            mixer.music.unpause()
+            is_playing = True
+    except:
+        tkinter.messagebox.showerror("File Not Found")
+        print("File Not Found Error")
 
 
 def set_volume(value):
