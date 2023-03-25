@@ -3,8 +3,20 @@ from pygame import mixer
 
 window = Tk()
 mixer.init()
-window.geometry('300x300')
+window.geometry('500x500')
 window.title('TK Music Player')
+
+menubar = Menu(window)
+file_submenu = Menu(menubar, tearoff=0)
+window.config(menu=menubar)
+
+menubar.add_cascade(label="File", menu=file_submenu, underline=0)
+file_submenu.add_command(label="Open", underline=0)
+file_submenu.add_command(label="Exit")
+
+help_submenu = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="Help", menu=help_submenu)
+help_submenu.add_command(label="About")
 
 
 def play_music():
