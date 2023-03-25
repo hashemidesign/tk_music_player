@@ -3,4 +3,13 @@ from tkinter import *
 window = Tk()
 window.geometry('300x300')
 window.title('TK Music Player')
-window.mainloop()
+
+text_label = Label(window, text="Play Button")
+text_label.pack()
+
+play_icon = PhotoImage(file="assets/icons/play.png").subsample(5)
+play_icon_label = Label(window, image=play_icon)
+play_icon_label.pack()
+
+if __name__ == "__main__":
+    window.mainloop()
