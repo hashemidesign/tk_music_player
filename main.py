@@ -1,5 +1,23 @@
+import tkinter
 from tkinter import *
 from pygame import mixer
+from tkinter import filedialog, messagebox
+
+
+filename = ''
+
+
+def browse_file():
+    global filename
+    filename = filedialog.askopenfilename()
+
+
+def show_help_window():
+    tkinter.messagebox.showinfo(
+        title="About Tk Music Player",
+        message="Hello Everyone, This is a revolutionary music player of 21st century",
+    )
+
 
 window = Tk()
 mixer.init()
@@ -11,17 +29,21 @@ file_submenu = Menu(menubar, tearoff=0)
 window.config(menu=menubar)
 
 menubar.add_cascade(label="File", menu=file_submenu, underline=0)
-file_submenu.add_command(label="Open", underline=0)
-file_submenu.add_command(label="Exit")
+file_submenu.add_command(label="Open", underline=0, command=browse_file)
+file_submenu.add_command(label="Exit", command=window.destroy)
 
 help_submenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=help_submenu)
-help_submenu.add_command(label="About")
+help_submenu.add_command(label="About", command=show_help_window)
 
 
 def play_music():
-    mixer.music.load("assets/sounds/waiting.wav")
-    mixer.music.play()
+    try:
+        mixer.music.load(filename)
+        mixer.music.play()
+    except:
+        tkinter.messagebox.showerror("File Not Found")
+        print("File Not Found Error")
 
 
 def stop_music():
