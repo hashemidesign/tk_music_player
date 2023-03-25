@@ -1,23 +1,51 @@
 from tkinter import *
-
-
-def print_sth():
-    print("hello world")
-
+from pygame import mixer
 
 window = Tk()
+mixer.init()
 window.geometry('300x300')
 window.title('TK Music Player')
+
+
+def play_music():
+    mixer.music.load("assets/sounds/waiting.wav")
+    mixer.music.play()
+
+
+def stop_music():
+    mixer.music.stop()
+
+
+def pause_music():
+    mixer.music.pause()
+
+
+def set_volume(value):
+    volume = int(value) / 100
+    mixer.music.set_volume(volume)
+
 
 text_label = Label(window, text="Play Button")
 text_label.pack()
 
-play_icon = PhotoImage(file="assets/icons/play.png").subsample(5)
-play_icon_label = Label(window, image=play_icon)
-play_icon_label.pack()
+play_icon = PhotoImage(file="assets/icons/96/play.png")
+stop_icon = PhotoImage(file="assets/icons/96/stop.png")
+pause_icon = PhotoImage(file="assets/icons/96/pause.png")
+next_icon = PhotoImage(file="assets/icons/96/forward.png")
+prev_icon = PhotoImage(file="assets/icons/96/rewind.png")
 
-play_btn = Button(window, image=play_icon, command=print_sth)
+play_btn = Button(window, image=play_icon, command=play_music)
 play_btn.pack()
+
+pause_btn = Button(window, image=pause_icon, command=pause_music)
+pause_btn.pack()
+
+stop_btn = Button(window, image=stop_icon, command=stop_music)
+stop_btn.pack()
+
+scale = Scale(window, from_=0, to=100, orient=HORIZONTAL, command=set_volume)
+scale.set(30)
+scale.pack()
 
 if __name__ == "__main__":
     window.mainloop()
